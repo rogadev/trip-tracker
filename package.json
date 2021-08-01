@@ -1,0 +1,28 @@
+{
+  "name": "trip-tracker",
+  "version": "1.0.0",
+  "description": "I built a quick little trip tracker to track my contracts with Granny Go Go over the summer of 2021. This helps me keep tabs on how many trips I did and how much money I've potentially made each month.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vonroga/trip-tracker.git"
+  },
+  "author": "Ryan Paranich (Ryan Roga)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vonroga/trip-tracker/issues"
+  },
+  "homepage": "https://github.com/vonroga/trip-tracker#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}

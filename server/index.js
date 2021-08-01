@@ -1,21 +1,16 @@
-import express from 'express';
-import cors from 'cors';
-
+const express = require('express');
+const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000;
-const posts = express.Router()
+const port = process.env.PORT || 5000;
 
-/* Middleware */
+/* Port listening */
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+/* Middlewares */
 app.use(cors());
 
-/* Routes */
-posts.get('/', (req, res) => {
-  res.send('works');
-});
-
-app.use('/api/posts', posts);
-
-app.listen(port, () => {
-    console.log(`Server running on ${port}`);
-
-});
+/* Endpoints */
+const rides = require('./routes/api/rides');
+app.use('/api/rides', rides);
