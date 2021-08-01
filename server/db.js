@@ -14,7 +14,7 @@ async function main() {
   try {
     await client.connect();
     console.log('Connected to MongoDB');
-    await listDatabases(client);
+    await listDatabases();
   } catch (err) {
     console.log(err);
   } finally {
@@ -24,7 +24,7 @@ async function main() {
 
 main().catch(console.error);
 
-async function listDatabases(client) {
+async function listDatabases() {
   const dbList = await client.db().admin().listDatabases();
   console.log('Databases:');
   dbList.databases.forEach((db) => {
@@ -32,7 +32,7 @@ async function listDatabases(client) {
   });
 }
 
-async function createPassenger(client, newPassenger) {
+async function createPassenger(newPassenger) {
   const result = client
     .db('trip_data')
     .collection('passengers')
