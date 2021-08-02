@@ -20,7 +20,7 @@ async function test() {
   try {
     await client.connect();
 
-    const result = await findOnePassenger('name', 'betty');
+    const result = await findAllPassengers();
     console.log(result);
   } catch (err) {
     console.log(err);
@@ -28,7 +28,7 @@ async function test() {
     await client.close();
   }
 }
-test().catch(console.error);
+//test().catch(console.error);
 
 // --- LIST & CREATE --- //
 
@@ -43,16 +43,36 @@ async function listDatabases() {
 
 /* Create a new passenger in the DB. (working) */
 async function createPassenger(newPassenger) {
+  let result = '';
+  try {
+    await client.connect();
+    result = await client
+      .db(dbName)
+      .collection(passengers)
+      .insertOne(newPassenger);
+  } catch(err) {
+    console.error(err);
+  } finally {
+    client.close();
+    console.log('New passenger added and given the ID: ' + result.insertedId);
+    return {
+      id: result.insertedId ? result.insertedId.toString() : '',
+      success: result.acknowledged || false,
+    }
+  }
+
+
+
   // TODO - Validate new passenger object...
-  const result = await client
-    .db(dbName)
-    .collection(passengers)
-    .insertOne(newPassenger);
-  console.log('New passenger added and given the ID: ' + result.insertedId);
-  return {
-    id: result.insertedId.toString(),
-    success: result.acknowledged || false,
-  };
+  // let result = await client
+  //   .db(dbName)
+  //   .collection(passengers)
+  //   .insertOne(newPassenger);
+  // console.log('New passenger added and given the ID: ' + result.insertedId);
+  // return {
+  //   id: result.insertedId.toString(),
+  //   success: result.acknowledged || false,
+  // };
 }
 
 // --- WRITE --- //
@@ -73,10 +93,26 @@ async function findOnePassenger(key, value) {
   }
 }
 
+/* Find and return all passengers. */
 async function findAllPassengers() {
-  const result = await client
+  let result = '';
+  try {
+    await client.connect();
+    result = await client
     .db(dbName)
     .collection(passengers)
     .find()
     .toArray();
+  } catch(err) {
+    console.error(err);
+  } finally {
+    await client.close();
+    return result;
+  }
 }
+
+module.exports = {
+  findAllPassengers,
+  findOnePassenger,
+  createPassenger,
+};
