@@ -11,6 +11,9 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
+const dbName = 'trip_data';
+const passengers = 'passengers';
+
 // --- END SETUP --- //
 
 async function test() {
@@ -42,8 +45,8 @@ async function listDatabases() {
 async function createPassenger(newPassenger) {
   // TODO - Validate new passenger object...
   const result = await client
-    .db('trip_data')
-    .collection('passengers')
+    .db(dbName)
+    .collection(passengers)
     .insertOne(newPassenger);
   console.log('New passenger added and given the ID: ' + result.insertedId);
   return {
@@ -56,11 +59,11 @@ async function createPassenger(newPassenger) {
 
 /* Finds a passenger with the given field type. */
 async function findOnePassenger(key, value) {
+  console.log(`Finding ${key}: ${value}...`);
   const result = await client
-    .db('trip_data')
-    .collection('passengers')
+    .db(dbName)
+    .collection(passengers)
     .findOne({ [key]: value });
-
   if (result) {
     console.log('Found.');
     return result;
@@ -68,4 +71,12 @@ async function findOnePassenger(key, value) {
     console.log('Not found.');
     return null;
   }
+}
+
+async function findAllPassengers() {
+  const result = await client
+    .db(dbName)
+    .collection(passengers)
+    .find()
+    .toArray();
 }
