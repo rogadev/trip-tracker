@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser');
+
+/* Application/json parser */
+var jsonParser = bodyParser.json();
 
 /* Definitions */
 const port = process.env.PORT || 5000;
@@ -13,6 +17,7 @@ app.listen(port, () => {
 
 /* Middlewares */
 app.use(cors());
+app.use(jsonParser);
 
 /* Endpoints */
 const passengers = require('./routes/api/passengers');

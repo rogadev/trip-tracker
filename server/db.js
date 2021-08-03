@@ -41,8 +41,9 @@ async function listDatabases() {
   });
 }
 
-/* Create a new passenger in the DB. (working) */
+/* Create a new passenger in the DB. */
 async function createPassenger(newPassenger) {
+  // todo - validate newPassenger
   let result = '';
   try {
     await client.connect();
@@ -50,29 +51,17 @@ async function createPassenger(newPassenger) {
       .db(dbName)
       .collection(passengers)
       .insertOne(newPassenger);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   } finally {
     client.close();
+    console.log(newPassenger);
     console.log('New passenger added and given the ID: ' + result.insertedId);
     return {
       id: result.insertedId ? result.insertedId.toString() : '',
       success: result.acknowledged || false,
-    }
+    };
   }
-
-
-
-  // TODO - Validate new passenger object...
-  // let result = await client
-  //   .db(dbName)
-  //   .collection(passengers)
-  //   .insertOne(newPassenger);
-  // console.log('New passenger added and given the ID: ' + result.insertedId);
-  // return {
-  //   id: result.insertedId.toString(),
-  //   success: result.acknowledged || false,
-  // };
 }
 
 // --- WRITE --- //
@@ -98,12 +87,8 @@ async function findAllPassengers() {
   let result = '';
   try {
     await client.connect();
-    result = await client
-    .db(dbName)
-    .collection(passengers)
-    .find()
-    .toArray();
-  } catch(err) {
+    result = await client.db(dbName).collection(passengers).find().toArray();
+  } catch (err) {
     console.error(err);
   } finally {
     await client.close();
@@ -111,8 +96,24 @@ async function findAllPassengers() {
   }
 }
 
+// --- DELETE --- //
+
+/* Delete Passenger By ID */
+async function deletePassengerById(id) {
+  try {
+    await client.connect();
+    await client.db(dbName).collection(passengers).deleteOne({ _id: id });
+  } catch (err) {
+    console.error(err);
+  } finally {
+    await client.close();
+    console.log(`Deleted passenger with ID ${id}`);
+  }
+}
+
 module.exports = {
   findAllPassengers,
   findOnePassenger,
   createPassenger,
+  deletePassengerById,
 };
