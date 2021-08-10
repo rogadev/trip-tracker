@@ -1,8 +1,9 @@
 // --- SETUP --- //
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 function createURI() {
-  return `mongodb+srv://tripTracker:rogatriptracker2021@cluster0.i2n1y.mongodb.net/Cluster0?retryWrites=true&w=majority`;
+  return `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.i2n1y.mongodb.net/Cluster0?retryWrites=true&w=majority`;
 }
 
 const uri = createURI();
