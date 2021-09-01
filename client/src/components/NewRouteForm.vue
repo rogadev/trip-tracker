@@ -1,67 +1,122 @@
 <template>
-    <form @submit.prevent='submitNewRoute'>
-        <!-- The form -->
-        <label for="code"></label>
-        <input type="text" id='code'>
-        <label for="type"></label>
-        <input type="text" id='type'>
-        <label for="stop1"></label>
-        <input type="text" id='stop1'>
-        <label for="stop2"></label>
-        <input type="text" id='stop2'>
-        <label for="stop3"></label>
-        <input type="text" id='stop3'>
-        <label for="stop4"></label>
-        <input type="text" id='stop4'>
-        <label for="pay"></label>
-        <input type="text" id='pay'>
-        <label for="duration"></label>
-        <input type="text" id='duration'>
-        <label for="distance"></label>
-        <input type="text" id='distance'>
+  <form
+    @submit.prevent="attemptCreateNewRoute"
+    id="new-route"
+    autocomplete="off"
+  >
+    <label for="type">Type</label>
+    <select name="type" id="type">
+      <option value="M">Ministry</option>
+      <option value="P">Personal</option>
+    </select>
 
-        <!-- Show buttons or "loading..." -->
-        <div class="buttons" v-if="!loading">
-            <button :click="submitNewRoute()" type="submit">Add New Route</button>
-            <button :click="$emit('closeModal')">Cancel</button>
-        </div>
-        <div class="loading" v-else>
-            <small>loading...</small>
-        </div>
+    <label for="code">Code</label>
+    <input v-model="code" id="code" type="text" ref="formStart" />
 
-    </form>
+    <label for="stop1">Stop 1</label>
+    <select name="stop1" id="stop1">
+      <option
+        v-for="location in destinations"
+        :key="location + '1'"
+        :value="location"
+      >
+        {{ location }}
+      </option>
+    </select>
+
+    <label for="stop2">Stop 2</label>
+    <select name="stop2" id="stop2">
+      <option
+        v-for="location in destinations"
+        :key="location + '2'"
+        :value="location"
+      >
+        {{ location }}
+      </option>
+    </select>
+
+    <label for="pay">Pay</label>
+    <input v-model="pay" type="text" id="pay" />
+    <label for="distance">Distance</label>
+    <input v-model="distance" type="text" id="distance" />
+    <label for="duration">Duration</label>
+    <input v-model="duration" type="text" id="duration" />
+    <button v-if="!loading" type="submit">Create New Route</button>
+    <div v-else class="loading">
+      <small>creating...</small>
+    </div>
+  </form>
 </template>
 
 <script>
-export default {
-    data(){
-        return{
-            code, type, stops = [], pay, duration, distance,
-            loading: false,
-        }
-    },
-    emits: ['closeModal'],
-    methods: {
-        submitNewRoute(){
-            this.loading = true;
-            // attempt submission
+import { writeNewRoute } from "../db";
 
-            // if success, emit close modal
-            this.loading = false;
-            this.$emit('closeModal')
-        },
+export default {
+  methods: {
+    attemptCreateNewRoute() {
+      this.loading = true;
+      writeNewRoute(
+        this.code,
+        this.type,
+        this.stop1,
+        this.stop2,
+        this.pay,
+        this.distance,
+        this.duration
+      );
+      this.$emit("closeModal");
+      this.loading = false;
     },
-    mounted() {
-        this.code = ''
-        this.type = 'M'
-        this.stops = []
-        this.pay = 0.00
-        this.duration = 0.00
-        this.distance = 0.0
-    }
-}
+  },
+  emits: ["closeModal"],
+  data() {
+    return {
+      loading: false,
+      code: "",
+      type: "M",
+      stop1: "",
+      stop2: "",
+      pay: "",
+      distance: "",
+      duration: "",
+      destinations: [
+        "Courtenay",
+        "Cumberland",
+        "Nanaimo",
+        "Victoria",
+        "Campbell River",
+        "Parksville",
+        "Qualicum",
+        "Port Alberni",
+        "Ladysmith",
+        "Duncan",
+        "Crofton",
+        "Errington",
+        "Coombs",
+        "Whisky Creek",
+        "Wellington",
+        "Cassidy",
+        "Cedar",
+        "Lantzville",
+        "Nanoose Bay",
+        "Chemanius",
+        "Saltair",
+        "Qualicum Bay",
+        "Bowser",
+        "Cobble Hill",
+        "Mill Bay",
+        "Dashwood",
+      ],
+    };
+  },
+  mounted() {
+    this.$refs.formStart.focus();
+  },
+};
 </script>
 
 <style scoped>
-
+input {
+  text-align: center;
+}
 </style>
