@@ -1,9 +1,6 @@
 <template>
   <div class="dash">
     <h1>Dashboard</h1>
-<<<<<<< Updated upstream
-    <router-link to='/routes'>Routes</router-link>
-=======
 
     <div class="add-route">
       <h2>Add Route</h2>
@@ -29,7 +26,6 @@
         <button type="submit">Add Route</button>
       </form>
     </div>
->>>>>>> Stashed changes
   </div>
 </template>
 
