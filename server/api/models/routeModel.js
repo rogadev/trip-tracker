@@ -46,7 +46,7 @@ function getPay(num) {
 }
 
 function setPay(num) {
-  return num * 100;
+  return num;
 }
 
 function getD(num) {
@@ -54,7 +54,7 @@ function getD(num) {
 }
 
 function setD(num) {
-  return num * 10;
+  return num;
 }
 
 module.exports = mongoose.model('route', routeSchema);
