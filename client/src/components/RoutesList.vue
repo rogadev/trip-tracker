@@ -28,8 +28,6 @@ export default {
       .then((response) => response.text())
       .then((result) => (this.routesList = JSON.parse(result)))
       .catch((error) => console.log("error", error));
-
-    console.log(this.routesList);
   },
   methods: {
     titleCase(str) {

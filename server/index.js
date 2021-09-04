@@ -6,13 +6,16 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-global.Trip = require('./api/models/routeModel');
+global.Route = require('./api/models/routeModel');
+global.Trip = require('./api/models/tripModel');
 const routes = require('./api/routes/routeRoutes');
+const trips = require('./api/routes/tripRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
 const routesApi = require('./api/routes/routeRoutes');
+const tripsApi = require('./api/routes/tripRoutes');
 const port = process.env.PORT || 5000;
 const app = express();
 
@@ -22,6 +25,7 @@ app.use(express.json());
 
 // API Endpoints
 routes(app);
+trips(app);
 
 // Start server
 app.listen(port);
