@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 /* Local Config */
 import Dash from '../views/Dash.vue';
 import Routes from '../views/Routes.vue';
+import Trips from '../views/Trips.vue';
 /* Route Paths & Config */
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
     path: '/routes',
     name: 'routes',
     component: Routes,
+  },
+  {
+    path: '/trips',
+    name: 'trips',
+    component: Trips,
   },
 ];
 /* Constructed Router */
