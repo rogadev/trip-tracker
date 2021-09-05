@@ -3,8 +3,16 @@
     <h1>Trips</h1>
     <router-link to="/">back</router-link>
 
-    <day-trips title="Today" :date="todaysDate"></day-trips>
-    <day-trips title="Tomorrow" :date="tomorrowsDate"></day-trips>
+    <day-trips
+      title="Today"
+      :date="todaysDate"
+      :trips="todaysTrips"
+    ></day-trips>
+    <day-trips
+      title="Tomorrow"
+      :date="tomorrowsDate"
+      :trips="tomorrowsTrips"
+    ></day-trips>
 
     <div class="trips-list-container"></div>
   </div>
@@ -27,6 +35,8 @@ export default {
       tripsData: null,
       todaysDate: today,
       tomorrowsDate: tomorrow,
+      todaysTrips: null,
+      tomorrowsTrips: null,
     };
   },
   beforeMount() {
@@ -38,8 +48,23 @@ export default {
     };
     fetch("http://localhost:3000/trips", requestOptions)
       .then((response) => response.text())
-      .then((result) => (this.tripsData = JSON.parse(result)))
-      .catch((error) => console.log("error", error));
+      .then((result) => {
+        this.tripsData = JSON.parse(result);
+      })
+      .then(() => this.getTodaysTrips())
+      .then(() => this.getTomorrowsTrips())
+      .catch((error) => console.error("API Error: ", error))
+      .finally(() => console.log("Trips.vue: Interaction with API complete."));
+  },
+  methods: {
+    getTodaysTrips() {
+      let trips = [];
+      for (const trip of this.tripsData) {
+        if (trip.date == today) trips.unshift(trip);
+      }
+      console.log("today", trips);
+    },
+    getTomorrowsTrips() {},
   },
 };
 </script>

@@ -6,6 +6,7 @@ exports.list_all_trips = (req, res) => {
   trip.find({}, (err, trips) => {
     if (err) res.send(err);
     res.json(trips);
+    console.log('trips found and returned', trips);
   });
 };
 
@@ -17,8 +18,15 @@ exports.create_a_trip = (req, res) => {
   });
 };
 
-exports.read_a_trip = (req, res) => {
-  trip.findById(req.params.tripId, (err, trip) => {
+exports.read_a_trip_by_id = (req, res) => {
+  trip.findOne(req.params.tripId, (err, trip) => {
+    if (err) res.send(err);
+    res.json(trip);
+  });
+};
+
+exports.read_a_trip_by_date = (req, res) => {
+  trip.findOne(req.params.date, (err, trip) => {
     if (err) res.send(err);
     res.json(trip);
   });

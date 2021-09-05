@@ -16,15 +16,28 @@
 import TripsList from "./TripsList.vue";
 
 export default {
+  computed: {
+    tripCount() {
+      let count = 0;
+
+      return count;
+    },
+    payCount() {
+      let pay = 0;
+
+      return pay;
+    },
+  },
   components: {
     "trips-list": TripsList,
   },
-  props: ["title", "trips", "date"],
+  props: ["title", "date", "trips"],
   data() {
     return {
       month: this.date.getMonth(), // (January gives 0),
       day: this.date.getDate(), // (1-31),
       dateString: this.date.toDateString(),
+      tripsData: null,
     };
   },
 };
