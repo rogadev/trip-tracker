@@ -70,8 +70,8 @@ export default {
 
       fetch("http://localhost:3000/routes", requestOptions)
         .then((response) => response.text())
-        .catch((error) => console.log("error", error))
-        .finally(this.$emit("closeModal"));
+        .catch((error) => console.error("API Error (/routes): ", error))
+        .finally(() => this.$emit("closeModal"));
     },
   },
   computed: {
@@ -90,7 +90,6 @@ export default {
       if (!s1 || !s2) valid = false;
       if (pay < 1 || distance < 1 || duration < 1) valid = false;
 
-      console.log(this.payload);
       return valid;
     },
     payload() {
@@ -119,41 +118,12 @@ export default {
       pay: null,
       distance: null,
       duration: null,
-      destinations: [
-        "Courtenay",
-        "Cumberland",
-        "Comox Valley",
-        "Nanaimo",
-        "Victoria",
-        "Campbell River",
-        "Parksville",
-        "Qualicum",
-        "Port Alberni",
-        "Ladysmith",
-        "Duncan",
-        "Crofton",
-        "Errington",
-        "Coombs",
-        "Whisky Creek",
-        "Wellington",
-        "Cassidy",
-        "Cedar",
-        "Lantzville",
-        "Nanoose Bay",
-        "Chemanius",
-        "Saltair",
-        "Qualicum Bay",
-        "Lake Cowichan",
-        "Bowser",
-        "Cobble Hill",
-        "Mill Bay",
-        "Dashwood",
-      ],
     };
   },
   mounted() {
     this.$refs.formStart.focus();
   },
+  inject: ["destinations"],
 };
 </script>
 
