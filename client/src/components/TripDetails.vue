@@ -15,6 +15,7 @@ export default {
   computed: {
     formattedDate() {
       let date = new Date(this.details.date);
+      date.setDate(date.getDate() + 1);
       return date.toDateString();
     },
     formattedPay() {
@@ -30,7 +31,10 @@ export default {
 
 <style scoped>
 .trip-details {
-  margin: 10px;
-  border: 1px solid darkgreen;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  padding: 20px;
+  width: 33%;
+  margin: 20px auto;
 }
 </style>

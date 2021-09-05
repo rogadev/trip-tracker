@@ -21,7 +21,6 @@ export default {
 
 <style scoped>
 .trips-list {
-  border: 1px solid salmon;
   margin: 10px;
 }
 </style>

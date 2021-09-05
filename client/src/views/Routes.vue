@@ -64,4 +64,8 @@ input {
   /* JavaScript can capture 'animationstart' events */
   animation-name: onAutoFillCancel;
 }
+a,
+button {
+  margin: 10px;
+}
 </style>

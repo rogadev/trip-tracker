@@ -50,4 +50,11 @@ export default {
 li {
   list-style: none;
 }
+ul {
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  padding: 20px;
+  width: 30%;
+  margin: 20px auto;
+}
 </style>

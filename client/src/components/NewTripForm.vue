@@ -98,7 +98,7 @@ export default {
   },
   data() {
     return {
-      date: null,
+      date: new Date(),
       to: "",
       from: "",
       routeFound: false,
@@ -112,7 +112,7 @@ export default {
       return Number.parseFloat(input / 100).toFixed(2);
     },
     resetForm() {
-      this.date = null;
+      this.date = new Date();
       this.to = "";
       this.from = "";
       this.routeFound = false;
@@ -191,14 +191,6 @@ export default {
   text-align: left;
   width: 240px;
   margin: 0 auto;
-}
-.card-container {
-  border: 1px solid rgb(31, 31, 31);
-  border-radius: 3px;
-  box-shadow: 1px 2px 4px rgba(34, 34, 34, 0.404);
-  padding: 20px;
-  width: fit-content;
-  margin: 20px auto;
 }
 input {
   text-align: center;
