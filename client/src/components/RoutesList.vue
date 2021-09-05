@@ -1,21 +1,27 @@
 <template>
-  <ul>
+  <div class="routes-list">
+    <h2>Existing Routes</h2>
+    <route-detail></route-detail>
     <li v-for="item in routesList" :key="item.id">
       {{ titleCase(item.stop1) }} - {{ titleCase(item.stop2) }} Pay: ${{
         makeCurrency(item.pay)
       }}
     </li>
-  </ul>
+  </div>
 </template>
 
 <script>
+import RouteDetail from "./RouteDetail.vue";
+
 export default {
   data() {
     return {
       routesList: "",
     };
   },
-
+  components: {
+    "route-detail": RouteDetail,
+  },
   beforeMount() {
     var requestOptions = {
       method: "GET",
@@ -50,11 +56,14 @@ export default {
 li {
   list-style: none;
 }
-ul {
-  border-radius: 3px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  padding: 20px;
-  width: 30%;
-  margin: 20px auto;
+.routes-list {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 400px;
+  margin: 20px auto 0 auto;
+  padding: 20px 0;
+}
+h2 {
+  padding: 0 15px 15px 15px;
+  margin: 0;
 }
 </style>

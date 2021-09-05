@@ -4,43 +4,63 @@
     id="new-route"
     autocomplete="off"
   >
-    <label for="type">Type</label>
-    <select name="type" id="type" v-model="type">
-      <option value="M">Ministry</option>
-      <option value="P">Personal</option>
-    </select>
+    <h2>Create New Route</h2>
 
-    <label for="code">Code</label>
-    <input v-model="code" id="code" type="text" ref="formStart" />
+    <div class="form-item-container">
+      <label for="type">Type</label>
+      <select name="type" id="type" v-model="type">
+        <option value="M">Ministry</option>
+        <option value="P">Personal</option>
+      </select>
+    </div>
 
-    <label for="stop1">Stop 1</label>
-    <select name="stop1" id="stop1" v-model="stop1">
-      <option
-        v-for="location in destinations"
-        :key="location + '1'"
-        :value="location.toLowerCase()"
-      >
-        {{ location }}
-      </option>
-    </select>
+    <div class="form-item-container">
+      <label for="code">Code</label>
+      <input v-model="code" id="code" type="text" ref="formStart" />
+    </div>
 
-    <label for="stop2">Stop 2</label>
-    <select name="stop2" id="stop2" v-model="stop2">
-      <option
-        v-for="location in destinations"
-        :key="location + '2'"
-        :value="location.toLowerCase()"
-      >
-        {{ location }}
-      </option>
-    </select>
+    <div class="form-item-container">
+      <label for="stop1">Stop 1</label>
+      <select name="stop1" id="stop1" v-model="stop1">
+        <option
+          v-for="location in destinations"
+          :key="location + '1'"
+          :value="location.toLowerCase()"
+        >
+          {{ location }}
+        </option>
+      </select>
+    </div>
 
-    <label for="pay">Pay</label>
-    <input v-model="pay" type="text" id="pay" />
-    <label for="distance">Distance (km)</label>
-    <input v-model="distance" type="text" id="distance" />
-    <label for="duration">Duration (minutes)</label>
-    <input v-model="duration" type="text" id="duration" />
+    <div class="form-item-container">
+      <label for="stop2">Stop 2</label>
+      <select name="stop2" id="stop2" v-model="stop2">
+        <option
+          v-for="location in destinations"
+          :key="location + '2'"
+          :value="location.toLowerCase()"
+        >
+          {{ location }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-item-container">
+      <label for="pay">Pay</label>
+      <input v-model="pay" type="text" id="pay" />
+    </div>
+
+    <div class="form-item-container">
+      <label for="distance">Distance (km)</label>
+      <input v-model="distance" type="text" id="distance" />
+    </div>
+
+    <div class="form-item-container">
+      <label for="duration">Duration (minutes)</label>
+      <input v-model="duration" type="text" id="duration" />
+    </div>
+
+    <button type="button" @click="$emit('closeModal')">Cancel</button>
     <button v-if="!loading" type="submit" :disabled="!validated">
       Create New Route
     </button>
@@ -55,19 +75,15 @@ export default {
   methods: {
     attemptCreateNewRoute() {
       this.loading = true;
-
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-
       var raw = JSON.stringify(this.payload);
-
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
       };
-
       fetch("http://localhost:3000/routes", requestOptions)
         .then((response) => response.text())
         .catch((error) => console.error("API Error (/routes): ", error))
@@ -130,5 +146,25 @@ export default {
 <style scoped>
 input {
   text-align: center;
+}
+.form-item-container {
+  display: flex;
+  justify-content: space-between;
+  width: 320px;
+  margin: 10px auto;
+}
+button {
+  margin: 15px 15px 20px 15px;
+}
+form {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 400px;
+  margin: 0 auto;
+}
+h2 {
+  padding: 15px;
+}
+select {
+  width: 165px;
 }
 </style>
