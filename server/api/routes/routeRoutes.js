@@ -12,4 +12,6 @@ module.exports = (app) => {
     .get(routeBuilder.read_a_route)
     .put(routeBuilder.update_a_route)
     .delete(routeBuilder.delete_a_route);
+
+  app.route('/routes/:stop1/:stop2').get(routeBuilder.find_route_by_stops);
 };

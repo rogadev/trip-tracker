@@ -2,7 +2,7 @@
   <div class="trips-list">
     <trip-details
       v-for="trip in trips"
-      :key="trip.id"
+      :key="trip._id"
       :details="trip"
     ></trip-details>
   </div>

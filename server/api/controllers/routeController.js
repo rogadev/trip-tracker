@@ -24,6 +24,21 @@ exports.read_a_route = (req, res) => {
   });
 };
 
+exports.find_route_by_stops = (req, res) => {
+  route.findOne(
+    {
+      $or: [
+        { stop1: req.params.stop1, stop2: req.params.stop2 },
+        { stop1: req.params.stop2, stop2: req.params.stop1 },
+      ],
+    },
+    (err, route) => {
+      if (err) res.send(err);
+      res.json(route);
+    }
+  );
+};
+
 exports.update_a_route = (req, res) => {
   route.findOneAndUpdate(
     { _id: req.params.routeId },

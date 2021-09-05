@@ -27,7 +27,7 @@ export default {
     fetch("http://localhost:3000/routes", requestOptions)
       .then((response) => response.text())
       .then((result) => (this.routesList = JSON.parse(result)))
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.error("API Error (/routes): ", error));
   },
   methods: {
     titleCase(str) {
@@ -45,3 +45,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+li {
+  list-style: none;
+}
+</style>
