@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Dash from '../views/Dash.vue';
 import Routes from '../views/Routes.vue';
 import Trips from '../views/Trips.vue';
+import Login from '../views/Login.vue';
 /* Route Paths & Config */
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: '/trips',
     name: 'trips',
     component: Trips,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
   },
 ];
 /* Constructed Router */

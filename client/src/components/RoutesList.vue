@@ -23,7 +23,7 @@ export default {
     "route-detail": RouteDetail,
   },
   beforeMount() {
-    var requestOptions = {
+    const requestOptions = {
       method: "GET",
       headers: {
         "content-type": "application/json",

@@ -8,8 +8,10 @@ const mongoose = require('mongoose');
 
 global.Route = require('./api/models/routeModel');
 global.Trip = require('./api/models/tripModel');
+global.User = require('./api/models/userModel');
 const routes = require('./api/routes/routeRoutes');
 const trips = require('./api/routes/tripRoutes');
+const users = require('./api/routes/userRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
@@ -26,6 +28,7 @@ app.use(express.json());
 // API Endpoints
 routes(app);
 trips(app);
+users(app);
 
 // Start server
 app.listen(port);

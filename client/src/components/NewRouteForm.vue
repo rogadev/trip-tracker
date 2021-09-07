@@ -167,4 +167,18 @@ h2 {
 select {
   width: 165px;
 }
+:-webkit-autofill {
+  /* Expose a hook for JavaScript when auto fill is shown. */
+  /* JavaScript can capture 'animationstart' events */
+  animation-name: onAutoFillStart;
+
+  /* Make the backgound color become yellow _really slowly_ */
+  transition: background-color 50000s ease-in-out 0s;
+}
+
+:not(:-webkit-autofill) {
+  /* Expose a hook for JS onAutoFillCancel */
+  /* JavaScript can capture 'animationstart' events */
+  animation-name: onAutoFillCancel;
+}
 </style>
