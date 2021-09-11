@@ -15,7 +15,4 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  border: 1px solid green;
-}
 </style>

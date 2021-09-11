@@ -3,12 +3,12 @@
     <h4 v-if="!signIn">New User</h4>
     <div class="input-wrapper">
       <label for="email">Email</label>
-      <input ref="email" id="email" type="email" autocomplete="username" />
+      <input v-model="email" id="email" type="email" autocomplete="username" />
     </div>
     <div class="input-wrapper">
       <label for="password">Password</label>
       <input
-        ref="password"
+        v-model="password"
         id="password"
         type="password"
         :autocomplete="signIn ? 'current-password' : 'new-password'"
@@ -38,11 +38,10 @@ export default {
   name: "login-card",
   methods: {
     attemptSigninSignup() {
-      console.log(this.email, this.password);
       if (this.signin) {
         // Sign IN
         fetch("http://localhost:3000/user/signin", this.requestOptions())
-          .then((response) => response.text())
+          .then((response) => response.text().then((text) => console.log(text)))
           .catch((err) => {
             console.log(err);
             this.feedbackMessage = err;
@@ -50,7 +49,15 @@ export default {
       } else {
         // Sign UP
         fetch("http://localhost:3000/user/signup", this.requestOptions())
-          .then((response) => response.text())
+          .then((response) => {
+            if (response.status == 409) {
+              this.feedbackMessage =
+                "A user with that email address already exists.";
+            }
+            if (response.status == 200) {
+              this.$router.push({ name: "success" });
+            }
+          })
           .catch((err) => {
             console.log(err);
             this.feedbackMessage = err;
@@ -59,6 +66,7 @@ export default {
     },
     toggleSignIn() {
       this.signIn = !this.signIn;
+      this.feedbackMessage = "";
     },
     requestOptions() {
       let myHeaders = new Headers();
@@ -87,20 +95,6 @@ export default {
 </script>
 
 <style scoped>
-:-webkit-autofill {
-  /* Expose a hook for JavaScript when auto fill is shown. */
-  /* JavaScript can capture 'animationstart' events */
-  animation-name: onAutoFillStart;
-
-  /* Make the backgound color become yellow _really slowly_ */
-  transition: background-color 50000s ease-in-out 0s;
-}
-
-:not(:-webkit-autofill) {
-  /* Expose a hook for JS onAutoFillCancel */
-  /* JavaScript can capture 'animationstart' events */
-  animation-name: onAutoFillCancel;
-}
 .card-container {
   border: 1px solid rgb(31, 31, 31);
   border-radius: 3px;
@@ -128,5 +122,10 @@ button {
 }
 h4 {
   margin: 0 0 10px 0;
+}
+.feedback {
+  font-weight: 600;
+  color: red;
+  width: 225px;
 }
 </style>
