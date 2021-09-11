@@ -50,10 +50,12 @@ export default {
         // Sign UP
         fetch("http://localhost:3000/user/signup", this.requestOptions())
           .then((response) => {
+            // 409, conflict, user already exists.
             if (response.status == 409) {
               this.feedbackMessage =
                 "A user with that email address already exists.";
             }
+            // 100, success, new user created.
             if (response.status == 200) {
               this.$router.push({ name: "success" });
             }
