@@ -8,4 +8,6 @@ module.exports = (app) => {
     .delete(userBuilder.delete_user);
 
   app.route('/user/signup').post(userBuilder.create_user);
+
+  app.route('/user/login').post(userBuilder.login_user);
 };
