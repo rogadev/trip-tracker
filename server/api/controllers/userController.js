@@ -78,6 +78,24 @@ exports.create_user = (req, res) => {
   }
 };
 
+exports.login_user = (req, res) => {
+  user.findOne({ email: req.body.email }, (err, user) => {
+    if (err) res.send(err);
+    if (!user) res.send('User not found.');
+    else {
+      bcrypt.compare(req.body.password, user.password, (err, result) => {
+        if (err) res.send(err);
+        if (result) {
+          res.json({
+            message: 'User successfully logged in.',
+            user: user,
+          });
+        } else res.send('Incorrect password.');
+      });
+    }
+  });
+};
+
 exports.update_user = (req, res) => {
   user.findOneAndUpdate(
     { _id: req.params.userId },
