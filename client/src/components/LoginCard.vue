@@ -36,6 +36,14 @@
 <script>
 export default {
   name: "login-card",
+  data() {
+    return {
+      signIn: true,
+      feedbackMessage: null,
+      email: "",
+      password: "",
+    };
+  },
   methods: {
     attemptSigninSignup() {
       if (this.signin) {
@@ -84,14 +92,6 @@ export default {
         redirect: "follow",
       };
     },
-  },
-  data() {
-    return {
-      signIn: true,
-      feedbackMessage: null,
-      email: "",
-      password: "",
-    };
   },
 };
 </script>
